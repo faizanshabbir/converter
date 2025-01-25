@@ -15,4 +15,12 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
+}
+
+html {
+  @apply bg-gray-50 transition-colors duration-200;
+}
+
+[data-theme='dark'] html {
+  @apply bg-gray-900;
 } 
