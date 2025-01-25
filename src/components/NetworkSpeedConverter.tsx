@@ -78,8 +78,8 @@ export default function NetworkSpeedConverter() {
       <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
         <h3 className="font-semibold mb-3 text-gray-900 dark:text-white">Quick Reference:</h3>
         <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-          <li>• <strong>Mbps</strong> = Megabits per second (lowercase 'b')</li>
-          <li>• <strong>MBps</strong> = Megabytes per second (uppercase 'B')</li>
+          <li>• <strong>Mbps</strong> = Megabits per second (lowercase &apos;b&apos;)</li>
+          <li>• <strong>MBps</strong> = Megabytes per second (uppercase &apos;B&apos;)</li>
           <li>• 1 MBps = 8 Mbps (1 byte = 8 bits)</li>
           <li>• Example: 100 Mbps internet = 12.5 MBps download speed</li>
         </ul>
