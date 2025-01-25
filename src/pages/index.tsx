@@ -2,6 +2,7 @@ import { useState } from 'react';
 import InfoCard from '../components/InfoCard';
 import DarkModeToggle from '../components/DarkModeToggle';
 import NetworkSpeedConverter from '../components/NetworkSpeedConverter';
+import Head from 'next/head';
 
 export default function ByteConverter() {
   const [value, setValue] = useState<number>(0);
@@ -43,81 +44,117 @@ export default function ByteConverter() {
   };
 
   return (
-    <div className="min-h-screen p-8">
-      <DarkModeToggle />
-      <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
-        ByteWise
-        <span className="block text-lg text-gray-600 dark:text-gray-400 mt-2">
-          Bits, Bytes & Network Speed Converter
-        </span>
-      </h1>
-      
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Byte Size Converter</h2>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <input
-              type="number"
-              value={value}
-              onChange={(e) => setValue(Number(e.target.value))}
-              className="border dark:border-gray-600 p-2 rounded w-40 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              placeholder="Enter value"
+    <>
+      <Head>
+        <title>ByteWise - Free Bits, Bytes & Network Speed Converter</title>
+        <meta name="description" content="Free online converter for bits, bytes, and network speeds. Convert between Mbps, MBps, GB, MB, KB and more. Easily calculate download speeds and data sizes." />
+        <meta name="keywords" content="byte converter, bit converter, network speed calculator, mbps to mbps converter, megabits to megabytes, bandwidth calculator, data unit converter" />
+        
+        {/* Open Graph / Social Media Meta Tags */}
+        <meta property="og:title" content="ByteWise - Bits, Bytes & Network Speed Converter" />
+        <meta property="og:description" content="Free online converter for bits, bytes, and network speeds. Convert between Mbps, MBps, GB, MB, KB and more." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bytewisecalculator.com" />
+        
+        {/* Technical Meta Tags */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://bytewisecalculator.com" />
+
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "ByteWise Calculator",
+            "description": "Free online converter for bits, bytes, and network speeds. Convert between Mbps, MBps, GB, MB, KB and more.",
+            "url": "https://bytewisecalculator.com",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Any",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          })}
+        </script>
+      </Head>
+
+      <div className="min-h-screen p-8">
+        <DarkModeToggle />
+        <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+          ByteWise
+          <span className="block text-lg text-gray-600 dark:text-gray-400 mt-2">
+            Bits, Bytes & Network Speed Converter
+          </span>
+        </h1>
+        
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Byte Size Converter</h2>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <input
+                type="number"
+                value={value}
+                onChange={(e) => setValue(Number(e.target.value))}
+                className="border dark:border-gray-600 p-2 rounded w-40 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                placeholder="Enter value"
+              />
+              
+              <select
+                value={fromUnit}
+                onChange={(e) => setFromUnit(e.target.value)}
+                className="border dark:border-gray-600 p-2 rounded w-32 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                {units.map(unit => (
+                  <option key={unit} value={unit}>{unit}</option>
+                ))}
+              </select>
+              
+              <span className="text-gray-500 dark:text-gray-400">to</span>
+              
+              <select
+                value={toUnit}
+                onChange={(e) => setToUnit(e.target.value)}
+                className="border dark:border-gray-600 p-2 rounded w-32 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                {units.map(unit => (
+                  <option key={unit} value={unit}>{unit}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mt-8 text-center">
+              <h3 className="text-xl text-gray-600 dark:text-gray-300">Result:</h3>
+              <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                {convert(value, fromUnit, toUnit).toFixed(2)} {toUnit}
+              </p>
+            </div>
+          </div>
+
+          <NetworkSpeedConverter />
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <InfoCard 
+              title="Common Binary Conversions"
+              conversions={[
+                { from: "Byte", to: "Bits", ratio: "8" },
+                { from: "Kilobyte", to: "Bytes", ratio: "1,024" },
+                { from: "Megabyte", to: "Kilobytes", ratio: "1,024" },
+                { from: "Gigabyte", to: "Megabytes", ratio: "1,024" },
+              ]}
             />
-            
-            <select
-              value={fromUnit}
-              onChange={(e) => setFromUnit(e.target.value)}
-              className="border dark:border-gray-600 p-2 rounded w-32 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            >
-              {units.map(unit => (
-                <option key={unit} value={unit}>{unit}</option>
-              ))}
-            </select>
-            
-            <span className="text-gray-500 dark:text-gray-400">to</span>
-            
-            <select
-              value={toUnit}
-              onChange={(e) => setToUnit(e.target.value)}
-              className="border dark:border-gray-600 p-2 rounded w-32 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            >
-              {units.map(unit => (
-                <option key={unit} value={unit}>{unit}</option>
-              ))}
-            </select>
+            <InfoCard 
+              title="Network Speed Examples"
+              conversions={[
+                { from: "100 Mbps", to: "MBps", ratio: "12.5" },
+                { from: "1 Gbps", to: "MBps", ratio: "125" },
+                { from: "1 MBps", to: "Mbps", ratio: "8" },
+                { from: "1 GBps", to: "Gbps", ratio: "8" },
+              ]}
+            />
           </div>
-
-          <div className="mt-8 text-center">
-            <h3 className="text-xl text-gray-600 dark:text-gray-300">Result:</h3>
-            <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-              {convert(value, fromUnit, toUnit).toFixed(2)} {toUnit}
-            </p>
-          </div>
-        </div>
-
-        <NetworkSpeedConverter />
-
-        <div className="grid md:grid-cols-2 gap-6">
-          <InfoCard 
-            title="Common Binary Conversions"
-            conversions={[
-              { from: "Byte", to: "Bits", ratio: "8" },
-              { from: "Kilobyte", to: "Bytes", ratio: "1,024" },
-              { from: "Megabyte", to: "Kilobytes", ratio: "1,024" },
-              { from: "Gigabyte", to: "Megabytes", ratio: "1,024" },
-            ]}
-          />
-          <InfoCard 
-            title="Network Speed Examples"
-            conversions={[
-              { from: "100 Mbps", to: "MBps", ratio: "12.5" },
-              { from: "1 Gbps", to: "MBps", ratio: "125" },
-              { from: "1 MBps", to: "Mbps", ratio: "8" },
-              { from: "1 GBps", to: "Gbps", ratio: "8" },
-            ]}
-          />
         </div>
       </div>
-    </div>
+    </>
   );
 } 
